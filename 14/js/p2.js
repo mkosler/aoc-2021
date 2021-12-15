@@ -59,24 +59,9 @@ rl.on('close', () => {
     counts = step(counts);
   }
 
-  let maxChar = '';
-  let max = -1;
-  let minChar = '';
-  let min = Number.MAX_VALUE;
-
-  for (const [k, v] of letterCounts.entries()) {
-    if (v > max) {
-      maxChar = k;
-      max = v;
-    }
-
-    if (v < min) {
-      minChar = k;
-      min = v;
-    }
-  }
+  const max = Math.max(...Array.from(letterCounts.values()));
+  const min = Math.min(...Array.from(letterCounts.values()));
 
   console.log(letterCounts);
-
   console.log(max, min, max - min);
 });
