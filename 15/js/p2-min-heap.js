@@ -1,4 +1,5 @@
 const readline = require('readline');
+const MinHeap = require('../../lib/min-heap');
 
 let grid = [];
 let width = 0;
@@ -34,7 +35,8 @@ const getNeighbors = i => {
 const dijkstra = (g, source, target) => {
   let q = new Map();
   let unvisited = new Set();
-  let sorted = []
+  // let sorted = []
+  let sorted = new MinHeap(x => x[1]);
 
   for (let i = 0; i < grid.length; i++) {
     unvisited.add(i);
@@ -45,12 +47,14 @@ const dijkstra = (g, source, target) => {
   }
 
   q.get(source).dist = 0;
-  sorted.push([source, 0]);
+  // sorted.push([source, 0]);
+  sorted.insert([source, 0]);
 
   let u = null;
 
   while (unvisited.size > 0) {
-    u = sorted.shift()[0];
+    // u = sorted.shift()[0];
+    u = sorted.remove()[0];
     unvisited.delete(u);
 
     if (u === target) break;
@@ -63,11 +67,12 @@ const dijkstra = (g, source, target) => {
       if (dist < q.get(n).dist) {
         q.get(n).dist = dist;
         q.get(n).prev = u;
-        sorted.push([n, dist]);
+        // sorted.push([n, dist]);
+        sorted.insert([n, dist]);
       }
     }
 
-    sorted.sort((a, b) => a[1] - b[1]);
+    // sorted.sort((a, b) => a[1] - b[1]);
   }
 
   if (u !== target) throw 'Did not find target';
